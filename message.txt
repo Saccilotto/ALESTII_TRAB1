@@ -1,0 +1,113 @@
+1 // Figura 15.8: CreditInquiry.java
+2 // Esse programa lê um arquivo sequencialmente e exibe o
+3 // conteúdo baseado no tipo de conta que o usuário solicita
+4 // (saldo credor, saldo devedor ou saldo zero).
+5 import java.io.IOException;
+6 import java.lang.IllegalStateException;
+7 import java.nio.file.Paths;
+8 import java.util.NoSuchElementException;
+9 import java.util.Scanner;
+10
+11 public class CreditInquiry
+12 {
+13 private final static MenuOption[] choices = ïMenuOption.values()ÿ;
+14
+15 public static void main(String[] args)
+16 {
+17 // obtém a solicitação do usuário (por exemplo, saldo zero, credor ou devedor)
+18 MenuOption accountType = getRequest();
+19
+20 while (accountType != MenuOption.END)
+21 {
+22 switch (accountType)
+23 {
+24 case ZERO_BALANCE:
+25 System.out.printf("%nAccounts with zero balances:%n");
+26 break;
+27 case CREDIT_BALANCE:
+28 System.out.printf("%nAccounts with credit balances:%n");
+29 break;
+30 case DEBIT_BALANCE:
+31 System.out.printf("%nAccounts with debit balances:%n");
+32 break;
+33 }
+34
+35 readRecords(accountType);
+36 accountType = getRequest(); // obtém a solicitação do usuário
+37 }
+38 }
+39
+40 // obtém a solicitação do usuário
+41 private static MenuOption getRequest()
+42 {
+43 int request = 4;
+44
+45 // exibe opções de solicitação
+46 System.out.printf("%nEnter request%n%s%n%s%n%s%n%s%n",
+47 " 1 - List accounts with zero balances",
+48 " 2 - List accounts with credit balances",
+49 " 3 - List accounts with debit balances",
+50 " 4 - Terminate program");
+51
+52 try
+53 {
+54 Scanner input = new Scanner(System.in);
+55
+56 do // insere a solicitação de usuário
+57 {
+58 System.out.printf("%n? ");
+59 request = input.nextInt();
+60 } while ((request < 1) || (request > 4));
+61 }
+62 catch (NoSuchElementException noSuchElementException)
+63 {
+64 System.err.println("Invalid input. Terminating.");
+65 }
+66
+67 return choices[request - 1]; // retorna o valor enum da opção
+68 }
+69
+70 // lê registros de arquivo e exibe somente os registros do tipo apropriado continua
+Capítulo 15 Arquivos, fluxos e serialização de objetos 519
+71 private static void readRecords(MenuOption accountType)
+72 {
+73 // abre o arquivo e processa o conteúdo
+74 ïtry (Scanner input = new Scanner(Paths.get("clients.txt")))ÿ
+75 {
+76 while (input.hasNext()) // mais dados para ler
+77 {
+78 int accountNumber = input.nextInt();
+79 String firstName = input.next();
+80 String lastName = input.next();
+81 double balance = input.nextDouble();
+82
+83 // se o tipo for a conta adequada, exibe o registro
+84 if (shouldDisplay(accountType, balance))
+85 System.out.printf("%-10d%-12s%-12s%10.2f%n", accountNumber,
+86 firstName, lastName, balance);
+87 else
+88 input.nextLine(); // descarta o restante do registro atual
+89 }
+90 }
+91 catch (NoSuchElementException |
+92 IllegalStateException | IOException e)
+93 {
+94 System.err.println("Error processing file. Terminating.");
+95 System.exit(1);
+96 }
+97 } // fim do método readRecords
+98
+99 // utiliza o tipo de registro para determinar se registro deve ser exibido
+100 private static boolean shouldDisplay(
+101 MenuOption accountType, double balance)
+102 {
+103 if ((accountType == MenuOption.CREDIT_BALANCE) && (balance < 0))
+104 return true;
+105 else if ((accountType == MenuOption.DEBIT_BALANCE) && (balance > 0))
+106 return true;
+107 else if ((accountType == MenuOption.ZERO_BALANCE) && (balance == 0))
+108 return true;
+109
+110 return false;
+111 }
+112 } // fim da classe CreditInquiry

@@ -16,7 +16,7 @@ public class App {
         Map<Integer, Vendas> vendas = new HashMap<Integer, Vendas>(OPERATIONS);
         
         int quantidade = 0, preco = 0;
-        String path = System.getProperty("user.dir") + "/instancias/30.txt";
+        String path = System.getProperty("user.dir") + "/instancias/teste.txt";
         String tokens[] = new String[3];
         
         //ChronoLocalDateTime date0 = LocalDateTime.from(ZonedDateTime.now());
@@ -38,12 +38,12 @@ public class App {
                 }
                 if(label == 'C') {
                     Compras compra = new Compras(quantidade, preco, cont);
-                    compras.put(compra.hashCode(), compra);
+                    compras.put(cont, compra);
                     cont++;
                 }
                 if(label == 'V') {
                     Vendas venda = new Vendas(quantidade, preco, cont);
-                    vendas.put(venda.hashCode(), venda);
+                    vendas.put(cont, venda);
                     cont++;
                 }
             }
@@ -51,24 +51,39 @@ public class App {
         }catch (FileNotFoundException e) {
             System.out.println(e);
         }
-        int comprasLucro = 0, vendasLucro = 0;
+
+        Map<Integer, Integer> comprasLucro  = new HashMap<Integer, Integer>(OPERATIONS);
+        Map<Integer, Integer> vendasLucro  = new HashMap<Integer, Integer>(OPERATIONS);
+
+        //int comprasLucro = 0, vendasLucro = 0;
         
-        Set<Integer> keySetC = compras.keySet();
-        ArrayList<Integer> listOfKeysC = new ArrayList<Integer>(keySetC);
-        //Collection<Compras> valuesC  = compras.values();
-        
-        //ArrayList<Compras> listOfValuesC = new ArrayList<Compras>(valuesC);
-        for(Integer p : listOfKeysC) {
-            comprasLucro = compras.get(p).getPreco() * compras.get(p).getQuantidade(); 
+        //Set<Integer> keySetC = compras.keySet();
+        //ArrayList<Integer> listOfKeysC = new ArrayList<Integer>(keySetC);
+        Collection<Compras> valuesC  = compras.values();
+        ArrayList<Compras> listOfValuesC = new ArrayList<Compras>(valuesC);
+        //listOfValuesC.clone(compras.);
+        int i = 0;
+        for(Compras p : listOfValuesC) {
+            //Compras aux = compras.get(p);
+            Integer aux = p.getPreco() * p.getQuantidade();
+            System.out.println("compra " + aux);
+            comprasLucro.put( i ,aux); 
+            i++;
         }
 
-        Set<Integer> keySetV = vendas.keySet();
-        ArrayList<Integer> listOfKeysV = new ArrayList<Integer>(keySetV);
-        //Collection<Vendas> valuesV  = vendas.values();
+        //Set<Integer> keySetV = vendas.keySet();
+        //ArrayList<Integer> listOfKeysV = new ArrayList<Integer>(keySetV);
+        Collection<Vendas> valuesV  = vendas.values();
         
         // ArrayList<Vendas> listOfValuesV = new ArrayList<Vendas>(valuesV);
-        for(Integer v : listOfKeysV){
-            vendasLucro = vendas.get(v).getPreco() * vendas.get(v).getQuantidade();         
+        
+        int j = 0;
+        for(Vendas p : valuesV) {
+            //Vendas aux = vendas.get(p);
+            Integer aux = p.getPreco() * p.getQuantidade();
+            System.out.println("venda " + aux);
+            vendasLucro.put( j , aux); 
+            j++;
         }
 
         System.out.println("\nComprasLucro: " + comprasLucro + "\nVendasLucro: " + vendasLucro);
