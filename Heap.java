@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Heap {
-    ComprasPrecoComparator compraPreco = new ComprasPrecoComparator();
-    ComprasQuantidadeComparator compraQuant = new ComprasQuantidadeComparator();
-    VendasPrecoComparator  vendasPreco = new  VendasPrecoComparator();
-    VendasQuantidadeComparator  vendaQuant = new  VendasQuantidadeComparator();   
+public class Heap {  
     private List<Object> heaplist;
 
     Heap() {
@@ -34,7 +30,7 @@ public class Heap {
     private void heapify_up(int i) {
         if(i > 0) {
             int parent = parent(i);
-            if(heaplist.get(i).compraPreco(heaplist.get(parent))){
+            if(heaplist.get(i) < heaplist.get(parent)){
                 swap(i, parent);
                 heapify_up(parent);
             }
