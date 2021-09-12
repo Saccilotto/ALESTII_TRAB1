@@ -17,17 +17,17 @@ public class Vendas {
     public int getQuantidade() {
         return quantidade;
     }
-
+    /*
     @Override
     public int hashCode() {
         return this.toString().hashCode();
     } 
-
+    
     public String toString() {
         return new StringBuilder(this.getClass().getName()).append("#")
         .append(this.getId()).toString();
     }
-
+   
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -41,7 +41,7 @@ public class Vendas {
             return false;
         return true;
     }
-             
+     */         
     public int getId(){
         return id;
     }

@@ -1,4 +1,5 @@
 
+
 public class Compras {
     private int quantidade;
     private int preco;
@@ -17,7 +18,7 @@ public class Compras {
     public int getQuantidade() {
         return quantidade;
     }
-
+    /*
     @Override
     public int hashCode() {
         return this.toString().hashCode();
@@ -41,7 +42,7 @@ public class Compras {
             return false;
         return true;
     }
-
+    */
     public int getId(){
         return id;
     }

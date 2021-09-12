@@ -1,6 +1,8 @@
 import java.io.File;
 import java.util.Iterator;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
@@ -12,10 +14,9 @@ public class App {
 
         Map<Integer, Compras> compras = new HashMap<Integer, Compras>(OPERATIONS);
         Map<Integer, Vendas> vendas = new HashMap<Integer, Vendas>(OPERATIONS);
-
-        char label = 'z';
-        Integer quantidade = 0, preco = 0;
-        String path =  System.getProperty("user.dir") + "/instancias/" + OPERATIONS + ".txt";
+        
+        int quantidade = 0, preco = 0;
+        String path = System.getProperty("user.dir") + "/instancias/30.txt";
         String tokens[] = new String[3];
         
         //ChronoLocalDateTime date0 = LocalDateTime.from(ZonedDateTime.now());
@@ -23,6 +24,7 @@ public class App {
             File instances = new File(path);
             Scanner readerScan = new Scanner(instances);
             Integer cont = 0;
+            char label = '0';
             while(readerScan.hasNextLine()) {
                 String data = readerScan.nextLine();
                 if(data.equals("q")) {
@@ -49,19 +51,29 @@ public class App {
         }catch (FileNotFoundException e) {
             System.out.println(e);
         }
-        int comprasTotal = 0;
-
-        Set entrySet = compras.entrySet();
-        Iterator itComp = entrySet.iterator();
-        while(itComp.hasNext()) {
-            Map.Entry me = (Map.Entry)itComp.next();
-            comprasTotal = me.getValue();
+        int comprasLucro = 0, vendasLucro = 0;
+        
+        Set<Integer> keySetC = compras.keySet();
+        ArrayList<Integer> listOfKeysC = new ArrayList<Integer>(keySetC);
+        //Collection<Compras> valuesC  = compras.values();
+        
+        //ArrayList<Compras> listOfValuesC = new ArrayList<Compras>(valuesC);
+        for(Integer p : listOfKeysC) {
+            comprasLucro = compras.get(p).getPreco() * compras.get(p).getQuantidade(); 
         }
+
+        Set<Integer> keySetV = vendas.keySet();
+        ArrayList<Integer> listOfKeysV = new ArrayList<Integer>(keySetV);
+        //Collection<Vendas> valuesV  = vendas.values();
+        
+        // ArrayList<Vendas> listOfValuesV = new ArrayList<Vendas>(valuesV);
+        for(Integer v : listOfKeysV){
+            vendasLucro = vendas.get(v).getPreco() * vendas.get(v).getQuantidade();         
+        }
+
+        System.out.println("\nComprasLucro: " + comprasLucro + "\nVendasLucro: " + vendasLucro);
         //ChronoLocalDateTime date1 = LocalDateTime.from(ZonedDateTime.now());
         //double time = date0 - date1;
         //System.out.println(time);
     }
-
-     
-
 }
