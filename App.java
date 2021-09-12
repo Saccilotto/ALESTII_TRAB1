@@ -1,15 +1,16 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class App {  
     public static void main (String args[]) {
+
+        Heap heaperBuy =  new Heap(1000000);
+        Heap heaperSell =  new Heap(1000000);
        
         char label = 'z';
-        Integer numOperations = 0, quantidade = 0, preco = 0;
-        
+        Integer quantidade = 0, preco = 0;
+        //numOperations = 0
         String path =  System.getProperty("user.dir") + "/instancias/30.txt";
         String tokens[] = new String[3];
 
@@ -17,10 +18,9 @@ public class App {
         try {
             File instances = new File(path);
             Scanner readerScan = new Scanner(instances);
-            String aux = readerScan.nextLine();
-            numOperations = Integer.parseInt(aux);
-            Map<Integer, Integer> compras = new HashMap<Integer, Integer>(numOperations); 
-            Map<Integer, Integer> vendas = new HashMap<Integer, Integer>(numOperations);    
+            //String aux = readerScan.nextLine();
+            //numOperations = Integer.parseInt(aux);
+
             while(readerScan.hasNextLine()) {
                 String data = readerScan.nextLine();
                 if(data.equals("q")) {
@@ -33,10 +33,12 @@ public class App {
                     preco = Integer.parseInt(tokens[2]);
                 }
                 if(label == 'V') {
-                    vendas.put(quantidade, preco);
+                    Compras compra = new Compras(quantidade, preco);
+                    heaperBuy.add(compra);
                 }
                 if(label == 'C') {
-                    compras.put(quantidade, preco);
+                    Vendas venda = new Vendas(quantidade, preco);
+                    heaperSell.add(venda);
                 }
             }
             readerScan.close();
