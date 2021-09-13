@@ -6,9 +6,9 @@ public class Vendas implements Comparable<Vendas>{
 
     public Vendas(Integer quantidade, Integer preco, Long id) {
         super();
-        quantidade = this.quantidade;
-        preco = this.preco;
-        id = this.id;
+        this.quantidade =  quantidade ;
+        this.preco =  preco ;
+        this.id = id;
     }
 
     public int getPreco() {
@@ -31,31 +31,6 @@ public class Vendas implements Comparable<Vendas>{
     @Override
     public String toString() {
         return "Vendas [id=" + id + ", quantidade=" + quantidade + ", preco=" + preco + "]";
-    }
-    /*
-    @Override
-    public int hashCode() {
-        return this.toString().hashCode();
-    } 
-    
-    public String toString() {
-        return new StringBuilder(this.getClass().getName()).append("#")
-        .append(this.getId()).toString();
-    }
-   
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-            Vendas other = (Vendas) obj;
-        if (id != other.id)
-            return false;
-        return true;
-    }
-     */         
+    }     
 }
 
