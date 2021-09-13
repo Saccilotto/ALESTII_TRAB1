@@ -1,11 +1,11 @@
 
-
-public class Compras {
+public class Compras implements Comparable<Compras>{
     private int quantidade;
     private int preco;
-    private int id;
+    private Long id;
 
-    public Compras(Integer quantidade, Integer preco, int id) {
+    public Compras(int quantidade, int preco, Long id) {
+        super();
         quantidade = this.quantidade;
         preco = this.preco;
         id = this.id;
@@ -18,6 +18,21 @@ public class Compras {
     public int getQuantidade() {
         return quantidade;
     }
+
+    public Long getId(){
+        return id;
+    }
+
+    @Override
+    public int compareTo(Compras c) {
+        return this.getId().compareTo(c.getId());
+    }
+    
+    @Override
+    public String toString() {
+        return "Vendas [id=" + id + ", quantidade=" + quantidade + ", preco=" + preco + "]";
+    }
+
     /*
     @Override
     public int hashCode() {
@@ -43,7 +58,4 @@ public class Compras {
         return true;
     }
     */
-    public int getId(){
-        return id;
-    }
 }

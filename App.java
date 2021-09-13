@@ -5,14 +5,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
-import java.util.Set;
+import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Set;
 
 public class App {  
     public static void main (String args[]) {
         final int OPERATIONS = 30;
 
-        Map<Integer, Compras> compras = new HashMap<Integer, Compras>(OPERATIONS);
-        Map<Integer, Vendas> vendas = new HashMap<Integer, Vendas>(OPERATIONS);
+        //Map<Integer, Compras> compras = new HashMap<Integer, Compras>(OPERATIONS);
+        //Map<Integer, Vendas> vendas = new HashMap<Integer, Vendas>(OPERATIONS);
+
+        //List<String> fileInputs = new ArrayList<String>(OPERATIONS);
+
+        MaxHeap<Compras> compras = new MaxHeap(); 
+        MinHeap<Vendas> vendas = new MinHeap(); 
         
         int quantidade = 0, preco = 0;
         String path = System.getProperty("user.dir") + "/instancias/teste.txt";
@@ -37,32 +44,33 @@ public class App {
                 }
                 if(label == 'C') {
                     Compras compra = new Compras(quantidade, preco, cont);
-                    compras.put(cont, compra);
                     cont++;
+                    compras.add(compra);
                 }
                 if(label == 'V') {
                     Vendas venda = new Vendas(quantidade, preco, cont);
-                    vendas.put(cont, venda);
+                    compras.add(venda);
                     cont++;
                 }
+                
             }
             readerScan.close();
         }catch (FileNotFoundException e) {
             System.out.println(e);
         }
 
-        Map<Integer, Integer> comprasLucro  = new HashMap<Integer, Integer>(OPERATIONS);
-        Map<Integer, Integer> vendasLucro  = new HashMap<Integer, Integer>(OPERATIONS);
+        //Map<Integer, Integer> comprasLucro  = new HashMap<Integer, Integer>(OPERATIONS);
+        //Map<Integer, Integer> vendasLucro  = new HashMap<Integer, Integer>(OPERATIONS);
 
         //int comprasLucro = 0, vendasLucro = 0;
         
         //Set<Integer> keySetC = compras.keySet();
         //ArrayList<Integer> listOfKeysC = new ArrayList<Integer>(keySetC);
-        Collection<Compras> valuesC  = compras.values();
-        ArrayList<Compras> listOfValuesC = new ArrayList<Compras>(valuesC);
+        //Collection<Compras> valuesC  = compras.values();
+        //ArrayList<Compras> listOfValuesC = new ArrayList<Compras>(valuesC);
         //listOfValuesC.clone(compras.);
-        int i = 0;
-        for(Compras p : listOfValuesC) {
+        //int i = 0;
+        /*for(Compras p : listOfValuesC) {
             //Compras aux = compras.get(p);
             Integer aux = p.getPreco() * p.getQuantidade();
             System.out.println("compra " + aux);
@@ -89,5 +97,6 @@ public class App {
         //ChronoLocalDateTime date1 = LocalDateTime.from(ZonedDateTime.now());
         //double time = date0 - date1;
         //System.out.println(time);
+        */
     }
 }

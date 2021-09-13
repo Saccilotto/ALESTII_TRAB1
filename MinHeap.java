@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Heap {  
+public class MinHeap {  
     private List<Object> heaplist;
 
-    Heap() {
+    MinHeap() {
         heaplist = new ArrayList<Object>();
     }
 
-    Heap(int tam) {
+    MinHeap(int tam) {
         heaplist = new ArrayList<Object>(tam);
     }
 
@@ -108,7 +108,7 @@ public class Heap {
      * Retorna o tamanho do heap em número de elementos dentro do heap.
      * @return number of items
      */
-    public Integer length() {
+    public Object length() {
         return heaplist.size();
     }
 
