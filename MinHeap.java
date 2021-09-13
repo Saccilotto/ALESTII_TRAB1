@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinHeap {  
-    private List<Object> heaplist;
+    private List<Compras> heaplist;
 
     MinHeap() {
-        heaplist = new ArrayList<Object>();
+        heaplist = new ArrayList<Compras>();
     }
 
     MinHeap(int tam) {
-        heaplist = new ArrayList<Object>(tam);
+        heaplist = new ArrayList<Compras>(tam);
     }
 
     private int right(int i) {
@@ -27,10 +27,11 @@ public class MinHeap {
         return (i - 1) / 2;
     }
 
+    //compares using Compras.compareTo == 0 or Compras.compareTo == 
     private void heapify_up(int i) {
         if(i > 0) {
             int parent = parent(i);
-            if(heaplist.get(i) < heaplist.get(parent)){
+            if(heaplist.get(i).compareTo(heaplist.get(parent)) >= 0){
                 swap(i, parent);
                 heapify_up(parent);
             }
@@ -56,7 +57,7 @@ public class MinHeap {
     }
 
     private void swap(int i, int parent) {
-        Object temp = heaplist.get(parent);
+        Compras temp = heaplist.get(parent);
         heaplist.set(parent, heaplist.get(i));
         heaplist.set(i, temp);
     }
@@ -65,7 +66,7 @@ public class MinHeap {
      * Insere um valor inteiro no heap.
      * @param n o número a ser inserido.
      */
-    public void add(Object n) {         // equivalente ao método inserts
+    public void add(Compras n) {         // equivalente ao método inserts
         heaplist.add(n);
         heapify_up(heaplist.size() - 1);
     }
@@ -74,8 +75,8 @@ public class MinHeap {
      * Método para a remoção e retorno do menor elemento do heap. Caso o heap esteja vazio, um valor null deve ser retornado.
      * @return o menor valor do heap.
      */
-    public Object poll() {        // equivalente ao método extract_min()
-        Object raiz = null;
+    public Compras poll() {        // equivalente ao método extract_min()
+        Compras raiz = null;
         if (heaplist.size() == 0) {
             throw new IllegalStateException("MinHeap is empty.");
         } else if(heaplist.size() == 1) {
@@ -84,7 +85,7 @@ public class MinHeap {
         }
 
         raiz = heaplist.get(0);
-        Object last = heaplist.remove(heaplist.size() - 1);
+        Compras last = heaplist.remove(heaplist.size() - 1);
         heaplist.set(0, last);
         heapify_down(0);
         return raiz;
@@ -94,7 +95,7 @@ public class MinHeap {
      * Método que acessa e retorna do menor elemento do heap. Caso o heap esteja vazio, um valor null deve ser retornado.
      * @return o menor valor do heap.
      */
-    public Object peek() {       // equivalente ao método min()
+    public Compras peek() {       // equivalente ao método min()
         if (heaplist.size() > 0) {
             return heaplist.get(0);
         }
@@ -108,7 +109,7 @@ public class MinHeap {
      * Retorna o tamanho do heap em número de elementos dentro do heap.
      * @return number of items
      */
-    public Object length() {
+    public int length() {
         return heaplist.size();
     }
 
