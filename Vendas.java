@@ -1,10 +1,12 @@
 
 public class Vendas implements Comparable<Vendas>{
-    private Integer quantidade;
-    private Integer preco;
+    private int quantidade;
+    private int preco;
     private Long id;
+    private VendasPrecoComparator compareToPreco = new VendasPrecoComparator();
+    private VendasQuantidadeComparator compareToQuantidade = new VendasQuantidadeComparator();
 
-    public Vendas(Integer quantidade, Integer preco, Long id) {
+    public Vendas(int quantidade, int preco, Long id) {
         super();
         this.quantidade =  quantidade ;
         this.preco =  preco ;
@@ -23,10 +25,26 @@ public class Vendas implements Comparable<Vendas>{
         return id;
     }
 
+    public VendasPrecoComparator getCompareToPreco (){
+        return compareToPreco;
+    }
+
+    public VendasQuantidadeComparator getCompareToQuantidade (){
+        return compareToQuantidade;
+    }
+
     @Override
     public int compareTo(Vendas v) {
         return this.getId().compareTo(v.getId());
     }
+
+    public int compareToPreco(Vendas c) {
+        return this.getCompareToPreco().compare(this, c);
+    }
+
+    public int compareToQuantidade(Vendas c) {
+        return this.getCompareToQuantidade().compare(this, c);   
+    }   
 
     @Override
     public String toString() {

@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaxHeap {  
-    private List<Object> heaplist;
+    private List<Compras> heaplist;
 
     MaxHeap() {
-        heaplist = new ArrayList<Object>();
+        heaplist = new ArrayList<Compras>();
     }
 
     MaxHeap(int tam) {
-        heaplist = new ArrayList<Object>(tam);
+        heaplist = new ArrayList<Compras>(tam);
     }
 
     private int right(int i) {
@@ -30,7 +30,7 @@ public class MaxHeap {
     private void heapify_up(int i) {
         if(i > 0) {
             int parent = parent(i);
-            if(heaplist.get(i) < heaplist.get(parent)){
+            if(heaplist.get(i).compareTo(heaplist.get(parent)) < 0){
                 swap(i, parent);
                 heapify_up(parent);
             }
@@ -38,25 +38,25 @@ public class MaxHeap {
     }
 
     private void heapify_down(int i) {
-        int left = left(i), right = right(i), smallest = -1;
+        int left = left(i), right = right(i), higher = -1;
 
-        if(left <= heaplist.size()-1 && heaplist.get(left) < heaplist.get(i)) {
-            smallest = left;
+        if(left <= heaplist.size()-1 && heaplist.get(left).compareTo(heaplist.get(i)) < 0) {
+            higher = left;
         } else {
-            smallest = i;
+            higher = i;
         }
 
-        if(right <= heaplist.size() - 1 &&  heaplist.get(right) < heaplist.get(smallest)) {
-            smallest = right;
+        if(right <= heaplist.size() - 1 &&  heaplist.get(right).compareTo(heaplist.get(higher)) < 0) {
+            higher = right;
         }
-        if(smallest != i) {
-            swap(i, smallest);
-            heapify_down(smallest);
+        if(higher != i) {
+            swap(i, higher);
+            heapify_down(higher);
         }
     }
 
     private void swap(int i, int parent) {
-        Object temp = heaplist.get(parent);
+        Compras temp = heaplist.get(parent);
         heaplist.set(parent, heaplist.get(i));
         heaplist.set(i, temp);
     }
@@ -65,7 +65,7 @@ public class MaxHeap {
      * Insere um valor inteiro no heap.
      * @param n o número a ser inserido.
      */
-    public void add(Object n) {         // equivalente ao método inserts
+    public void add(Compras n) {         // equivalente ao método inserts
         heaplist.add(n);
         heapify_up(heaplist.size() - 1);
     }
@@ -74,17 +74,17 @@ public class MaxHeap {
      * Método para a remoção e retorno do menor elemento do heap. Caso o heap esteja vazio, um valor null deve ser retornado.
      * @return o menor valor do heap.
      */
-    public Object poll() {        // equivalente ao método extract_min()
-        Object raiz = null;
+    public Compras poll() {        // equivalente ao método extract_min()
+        Compras raiz = null;
         if (heaplist.size() == 0) {
-            throw new IllegalStateException("MinHeap is empty.");
+            throw new IllegalStateException("MaxHeap is empty.");
         } else if(heaplist.size() == 1) {
             raiz = heaplist.remove(0);
             return raiz;
         }
 
         raiz = heaplist.get(0);
-        Object last = heaplist.remove(heaplist.size() - 1);
+        Compras last = heaplist.remove(heaplist.size() - 1);
         heaplist.set(0, last);
         heapify_down(0);
         return raiz;
@@ -94,7 +94,7 @@ public class MaxHeap {
      * Método que acessa e retorna do menor elemento do heap. Caso o heap esteja vazio, um valor null deve ser retornado.
      * @return o menor valor do heap.
      */
-    public Object peek() {       // equivalente ao método min()
+    public Compras peek() {       // equivalente ao método min()
         if (heaplist.size() > 0) {
             return heaplist.get(0);
         }
@@ -108,7 +108,7 @@ public class MaxHeap {
      * Retorna o tamanho do heap em número de elementos dentro do heap.
      * @return number of items
      */
-    public Object length() {
+    public int length() {
         return heaplist.size();
     }
 
@@ -118,6 +118,10 @@ public class MaxHeap {
      */
     public boolean isEmpty() {
         return heaplist.size() == 0;
+    }
+
+    public List<Compras> getHeap (){ 
+        return heaplist;
     }
 }
 

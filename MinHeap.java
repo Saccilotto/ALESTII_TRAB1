@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinHeap {  
-    private List<Compras> heaplist;
+    private List<Vendas> heaplist;
 
     MinHeap() {
-        heaplist = new ArrayList<Compras>();
+        heaplist = new ArrayList<Vendas>();
     }
 
     MinHeap(int tam) {
-        heaplist = new ArrayList<Compras>(tam);
+        heaplist = new ArrayList<Vendas>(tam);
     }
 
     private int right(int i) {
@@ -27,7 +27,7 @@ public class MinHeap {
         return (i - 1) / 2;
     }
 
-    //compares using Compras.compareTo == 0 or Compras.compareTo == 
+    //compares using Vendas.compareTo == 0 or Vendas.compareTo == 
     private void heapify_up(int i) {
         if(i > 0) {
             int parent = parent(i);
@@ -41,13 +41,13 @@ public class MinHeap {
     private void heapify_down(int i) {
         int left = left(i), right = right(i), smallest = -1;
 
-        if(left <= heaplist.size()-1 && heaplist.get(left) < heaplist.get(i)) {
+        if(left <= heaplist.size()-1 && heaplist.get(left).compareTo(heaplist.get(i)) < 0) {
             smallest = left;
         } else {
             smallest = i;
         }
 
-        if(right <= heaplist.size() - 1 &&  heaplist.get(right) < heaplist.get(smallest)) {
+        if(right <= heaplist.size() - 1 &&  heaplist.get(right).compareTo(heaplist.get(smallest)) < 0) {
             smallest = right;
         }
         if(smallest != i) {
@@ -57,7 +57,7 @@ public class MinHeap {
     }
 
     private void swap(int i, int parent) {
-        Compras temp = heaplist.get(parent);
+        Vendas temp = heaplist.get(parent);
         heaplist.set(parent, heaplist.get(i));
         heaplist.set(i, temp);
     }
@@ -66,7 +66,7 @@ public class MinHeap {
      * Insere um valor inteiro no heap.
      * @param n o número a ser inserido.
      */
-    public void add(Compras n) {         // equivalente ao método inserts
+    public void add(Vendas n) {         // equivalente ao método inserts
         heaplist.add(n);
         heapify_up(heaplist.size() - 1);
     }
@@ -75,8 +75,8 @@ public class MinHeap {
      * Método para a remoção e retorno do menor elemento do heap. Caso o heap esteja vazio, um valor null deve ser retornado.
      * @return o menor valor do heap.
      */
-    public Compras poll() {        // equivalente ao método extract_min()
-        Compras raiz = null;
+    public Vendas poll() {        // equivalente ao método extract_min()
+        Vendas raiz = null;
         if (heaplist.size() == 0) {
             throw new IllegalStateException("MinHeap is empty.");
         } else if(heaplist.size() == 1) {
@@ -85,7 +85,7 @@ public class MinHeap {
         }
 
         raiz = heaplist.get(0);
-        Compras last = heaplist.remove(heaplist.size() - 1);
+        Vendas last = heaplist.remove(heaplist.size() - 1);
         heaplist.set(0, last);
         heapify_down(0);
         return raiz;
@@ -95,7 +95,7 @@ public class MinHeap {
      * Método que acessa e retorna do menor elemento do heap. Caso o heap esteja vazio, um valor null deve ser retornado.
      * @return o menor valor do heap.
      */
-    public Compras peek() {       // equivalente ao método min()
+    public Vendas peek() {       // equivalente ao método min()
         if (heaplist.size() > 0) {
             return heaplist.get(0);
         }
@@ -119,5 +119,9 @@ public class MinHeap {
      */
     public boolean isEmpty() {
         return heaplist.size() == 0;
+    }
+
+    public List<Vendas> getHeap (){ 
+        return heaplist;
     }
 }
