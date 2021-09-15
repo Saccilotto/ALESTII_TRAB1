@@ -83,7 +83,7 @@ public class MinHeap {
             raiz = heaplist.remove(0);
             return raiz;
         }
-
+        
         raiz = heaplist.get(0);
         Vendas last = heaplist.remove(heaplist.size() - 1);
         heaplist.set(0, last);
